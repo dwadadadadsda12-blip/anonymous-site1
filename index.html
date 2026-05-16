@@ -1,0 +1,284 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANONYMOUS // Underground Network</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+    --bg:#000;
+    --primary:#00ff9d;
+    --secondary:#00d9ff;
+    --danger:#ff003c;
+    --text:#d8d8d8;
+}
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Share Tech Mono', monospace;
+    overflow-x:hidden;
+}
+canvas#matrix{
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    z-index:-2;
+}
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:repeating-linear-gradient(transparent 0 2px, rgba(0,255,157,0.03) 3px 4px);
+    pointer-events:none;
+    z-index:-1;
+}
+.navbar{
+    position:fixed;
+    top:0;width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+    background:rgba(0,0,0,0.65);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(0,255,157,0.2);
+    z-index:1000;
+}
+.logo{
+    font-family:'Orbitron',sans-serif;
+    font-size:2rem;
+    color:var(--primary);
+    text-shadow:0 0 15px var(--primary);
+    animation:glitch 2s infinite;
+}
+.nav-links a{
+    color:var(--text);
+    text-decoration:none;
+    margin-left:25px;
+    transition:.3s;
+}
+.nav-links a:hover{color:var(--primary)}
+.hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:120px 10% 60px;
+}
+.hero h1{
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(3rem,10vw,8rem);
+    color:var(--primary);
+    text-shadow:0 0 25px var(--primary);
+    letter-spacing:8px;
+}
+.hero p{
+    margin-top:20px;
+    font-size:1.2rem;
+    max-width:900px;
+    line-height:1.8;
+}
+.typing{
+    color:var(--secondary);
+    border-right:2px solid var(--secondary);
+    white-space:nowrap;
+    overflow:hidden;
+    width:0;
+    animation:typing 4s steps(40,end) forwards, blink .8s infinite;
+}
+.cta{
+    margin-top:40px;
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+.btn{
+    padding:15px 35px;
+    border:1px solid var(--primary);
+    background:transparent;
+    color:var(--primary);
+    text-decoration:none;
+    font-family:'Orbitron',sans-serif;
+    transition:.3s;
+    box-shadow:0 0 15px rgba(0,255,157,.2);
+}
+.btn:hover{
+    background:var(--primary);
+    color:#000;
+    box-shadow:0 0 30px var(--primary);
+}
+.section{
+    padding:100px 8%;
+}
+.section-title{
+    text-align:center;
+    font-size:2.5rem;
+    font-family:'Orbitron',sans-serif;
+    color:var(--secondary);
+    margin-bottom:60px;
+}
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+.card{
+    background:rgba(0,255,157,0.04);
+    border:1px solid rgba(0,255,157,0.15);
+    padding:30px;
+    transition:.3s;
+}
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 0 25px rgba(0,255,157,.15);
+}
+.card h3{
+    color:var(--primary);
+    margin-bottom:15px;
+    font-family:'Orbitron',sans-serif;
+}
+.terminal{
+    background:#050505;
+    border:1px solid var(--primary);
+    padding:25px;
+    max-width:1000px;
+    margin:0 auto;
+    box-shadow:0 0 25px rgba(0,255,157,.2);
+}
+.terminal-line{margin:8px 0;color:var(--primary)}
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+    text-align:center;
+}
+.stat-box{
+    padding:30px;
+    border:1px solid rgba(0,217,255,.2);
+}
+.stat-number{
+    font-size:3rem;
+    color:var(--secondary);
+    font-family:'Orbitron',sans-serif;
+}
+.footer{
+    text-align:center;
+    padding:40px 20px;
+    border-top:1px solid rgba(0,255,157,.1);
+    color:#777;
+}
+@keyframes glitch{
+    0%,100%{text-shadow:0 0 15px var(--primary)}
+    20%{text-shadow:-2px 0 var(--danger),2px 2px var(--secondary)}
+    40%{text-shadow:2px 0 var(--secondary),-2px -2px var(--danger)}
+}
+@keyframes typing{to{width:100%}}
+@keyframes blink{50%{border-color:transparent}}
+@media(max-width:768px){
+    .nav-links{display:none}
+    .hero h1{letter-spacing:3px}
+}
+</style>
+</head>
+<body>
+<canvas id="matrix"></canvas>
+
+<nav class="navbar">
+    <div class="logo">ANONYMOUS</div>
+    <div class="nav-links">
+        <a href="#ops">Operations</a>
+        <a href="#terminal">System</a>
+        <a href="#stats">Network</a>
+        <a href="#join">Join</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <h1>ANONYMOUS</h1>
+    <p class="typing">ACCESS GRANTED // ELITE DIGITAL UNDERGROUND // NO IDENTITY // NO LIMITS</p>
+    <p>Uma central futurista criada para dominar presença digital, comunidade, automação e operações underground com identidade máxima.</p>
+    <div class="cta">
+        <a href="#join" class="btn">ENTER SYSTEM</a>
+        <a href="#ops" class="btn">VIEW OPERATIONS</a>
+    </div>
+</section>
+
+<section class="section" id="ops">
+    <h2 class="section-title">CORE OPERATIONS</h2>
+    <div class="grid">
+        <div class="card"><h3>DISCORD CONTROL</h3><p>Painéis, bots, automação, tickets e domínio total da comunidade.</p></div>
+        <div class="card"><h3>HYPERLINK SYSTEM</h3><p>Ferramentas avançadas de redirecionamento e presença digital.</p></div>
+        <div class="card"><h3>NETWORK SECURITY</h3><p>Estrutura, monitoramento e proteção de operações digitais.</p></div>
+        <div class="card"><h3>UNDERGROUND DESIGN</h3><p>Interfaces glitch, cyberpunk e presença visual de alto impacto.</p></div>
+    </div>
+</section>
+
+<section class="section" id="terminal">
+    <h2 class="section-title">SYSTEM TERMINAL</h2>
+    <div class="terminal">
+        <div class="terminal-line">> Booting ANONYMOUS Core...</div>
+        <div class="terminal-line">> Encrypting identity...</div>
+        <div class="terminal-line">> Establishing secure node...</div>
+        <div class="terminal-line">> Discord command center connected.</div>
+        <div class="terminal-line">> Status: ONLINE</div>
+    </div>
+</section>
+
+<section class="section" id="stats">
+    <h2 class="section-title">NETWORK STATUS</h2>
+    <div class="stats">
+        <div class="stat-box"><div class="stat-number">99%</div><p>Stealth</p></div>
+        <div class="stat-box"><div class="stat-number">24/7</div><p>Uptime</p></div>
+        <div class="stat-box"><div class="stat-number">∞</div><p>Expansion</p></div>
+        <div class="stat-box"><div class="stat-number">ELITE</div><p>Rank</p></div>
+    </div>
+</section>
+
+<section class="section" id="join" style="text-align:center;">
+    <h2 class="section-title">JOIN THE SHADOWS</h2>
+    <p style="max-width:800px;margin:auto;line-height:1.8;">Entre para uma nova era digital. Crie presença. Domine sistemas. Expanda sua rede.</p>
+    <div class="cta" style="justify-content:center; margin-top:30px;">
+        <a href="https://discord.gg/ustftGTjRH" class="btn">CONNECT DISCORD</a>
+    </div>
+</section>
+
+<footer class="footer">
+    ANONYMOUS // NO FACE // NO TRACE // ONLY POWER
+</footer>
+
+<script>
+const canvas=document.getElementById('matrix');
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+const chars='01ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const fontSize=14;
+const columns=canvas.width/fontSize;
+const drops=[];
+for(let x=0;x<columns;x++) drops[x]=1;
+function draw(){
+    ctx.fillStyle='rgba(0,0,0,0.05)';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle='#00ff9d';
+    ctx.font=fontSize+'px monospace';
+    for(let i=0;i<drops.length;i++){
+        const text=chars[Math.floor(Math.random()*chars.length)];
+        ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+        if(drops[i]*fontSize>canvas.height&&Math.random()>0.975) drops[i]=0;
+        drops[i]++;
+    }
+}
+setInterval(draw,35);
+window.addEventListener('resize',()=>{
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+});
+</script>
+</body>
+</html>
+```
